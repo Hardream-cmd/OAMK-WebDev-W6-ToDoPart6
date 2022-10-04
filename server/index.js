@@ -14,7 +14,8 @@ const port = 3001;
 app.get("/", async function (req, res) {
   try {
     const connection = await mysql.createConnection(config.db);
-    res.status(200).send("Database connection was made");
+    const [result] = await connection.execute("select * from task");
+    res.status(200).json(result);
   } catch (err) {
     res.status(500).send(err.message);
   }
